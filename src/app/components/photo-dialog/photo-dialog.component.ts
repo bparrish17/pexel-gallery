@@ -8,14 +8,8 @@ import { Photo } from 'src/app/models';
   styleUrls: ['./photo-dialog.component.scss']
 })
 export class PhotoDialogComponent {
-  
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: Photo,
     public dialogRef: MatDialogRef<PhotoDialogComponent>
-  ) {
-  }
-
-  closeDialog() {
-    this.dialogRef.close('Pizza!');
-  }
+  ) {}
 }

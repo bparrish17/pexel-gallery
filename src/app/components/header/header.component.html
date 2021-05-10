@@ -1,13 +1,14 @@
 <div class="header">
   <h1>Pexels Gallery</h1>
-
-  <mat-form-field>
-    <mat-label>Search for Photos</mat-label>
+      
+  <div class="header__input-container">
     <input
-      matInput
-      class="header__input"
+      type="text" 
+      name="search-input"
       value="city"
+      placeholder="Search for photos..."
       (input)="onInputChanged($event)"
     >
-  </mat-form-field>
+    <mat-icon>search</mat-icon>
+  </div>
 </div>

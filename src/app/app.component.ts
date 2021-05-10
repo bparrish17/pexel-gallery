@@ -1,7 +1,8 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { debounceTime, filter, first, mergeMap, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, filter, first, mergeMap, switchMap, take, tap } from 'rxjs/operators';
 import { PhotoDialogComponent } from './components/photo-dialog/photo-dialog.component';
 import { PexelsPhoto, Photo } from './models';
 import { PexelsService } from './services/pexels.service';
@@ -18,7 +19,11 @@ export class AppComponent implements OnInit {
 
   @ViewChild('downloadRef', { static: false }) downloadRef: ElementRef; 
 
-  constructor(private pexelsService: PexelsService, public dialog: MatDialog) {}
+  constructor(
+    private pexelsService: PexelsService,
+    private dialog: MatDialog,
+    @Inject(DOCUMENT) private document: Document
+  ) {}
 
   ngOnInit() {
     this.photos$ = this.photosSubject$.pipe(
@@ -26,6 +31,11 @@ export class AppComponent implements OnInit {
       tap(console.log),
       switchMap((query: string) => this.pexelsService.searchImages(query))
     )
+
+    window.addEventListener('scroll', () => {
+      const isAtBottom = (window.scrollY + window.innerHeight) === this.document.body.scrollHeight;
+      if (isAtBottom) console.log('here!')
+  });
   }
 
   public onSearchInputted(query: string) {
@@ -36,12 +46,12 @@ export class AppComponent implements OnInit {
   public onPhotoClicked(photo: PexelsPhoto) {
     const { width, height } = this._calculateMaxPhotoDimensions(photo);
     this._openPhotoDialog(width, height, photo).pipe(
-      first(),
+      take(1), // handle close at max once
       mergeMap(() => this.pexelsService.getDownloadablePhotoUrl(photo.src.original))
     ).subscribe((downloadableUrl: string) => {
-      const a = document.createElement("a");
+      const a = document.createElement('a');
       a.href = downloadableUrl
-      a.download = "";
+      a.download = '';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
