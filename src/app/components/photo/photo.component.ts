@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { PexelsPhoto } from 'src/app/models';
+import { PexelsPhoto, Photo } from 'src/app/models';
 
 @Component({
   selector: 'app-photo',
@@ -8,16 +8,16 @@ import { PexelsPhoto } from 'src/app/models';
   styleUrls: ['./photo.component.scss']
 })
 export class PhotoComponent implements OnInit {
-  public photo: PexelsPhoto;
+  public urlProperty: 'galleryUrl' | 'expandedUrl' = 'galleryUrl';
 
-  @Input('photo') set _photo(photo: PexelsPhoto) {
-    const sanitizedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(<string>photo.src.medium);
-    this.photo = { ...photo, url: sanitizedUrl }
+  @Input() photo: Photo;
+  @Input('size') set urlSizeToDisplay(size: 'gallery' | 'expanded') {
+    this.urlProperty = `${size}Url` as any;
   };
 
-  @Output() onPhotoClick = new EventEmitter<PexelsPhoto>();
+  @Output() onPhotoClick = new EventEmitter<Photo>();
   
-  constructor(private sanitizer: DomSanitizer) { }
+  constructor() { }
 
   ngOnInit(): void {
   }

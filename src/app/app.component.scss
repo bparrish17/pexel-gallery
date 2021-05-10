@@ -1,6 +1,14 @@
-.gallery {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 0px 10px;
+
+.app {
+  background-color: #1c1c1c;
+  color: white;
+
+  &__gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0px 10px;
+  }
 }
+
+// #fddf27; yellow

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { debounceTime, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, filter, first, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { PhotoDialogComponent } from './components/photo-dialog/photo-dialog.component';
 import { PexelsPhoto, Photo } from './models';
 import { PexelsService } from './services/pexels.service';
@@ -14,6 +14,9 @@ import { PexelsService } from './services/pexels.service';
 export class AppComponent implements OnInit {
   public photos$: Observable<Photo[]>;
   public photosSubject$ = new BehaviorSubject<string>('city');
+  public download: any;
+
+  @ViewChild('downloadRef', { static: false }) downloadRef: ElementRef; 
 
   constructor(private pexelsService: PexelsService, public dialog: MatDialog) {}
 
@@ -31,8 +34,18 @@ export class AppComponent implements OnInit {
   }
 
   public onPhotoClicked(photo: PexelsPhoto) {
-    const { width, height } = this.calculateMaxPhotoDimensions(photo);
-    this.dialog.open(PhotoDialogComponent, { width, height, data: photo });
+    const { width, height } = this._calculateMaxPhotoDimensions(photo);
+    this._openPhotoDialog(width, height, photo).pipe(
+      first(),
+      mergeMap(() => this.pexelsService.getDownloadablePhotoUrl(photo.src.original))
+    ).subscribe((downloadableUrl: string) => {
+      const a = document.createElement("a");
+      a.href = downloadableUrl
+      a.download = "";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    })
   }
 
   /**
@@ -41,14 +54,21 @@ export class AppComponent implements OnInit {
    * @param photo {PexelsPhoto} : Photo to calculate fit for
    * @returns { width: string; height: string } : dimensions
    */
-  public calculateMaxPhotoDimensions(photo: PexelsPhoto): { width: string; height: string } {
-    const windowWidth = window.innerWidth * 0.90;
-    const windowHeight = window.innerHeight * 0.90;
+  private _calculateMaxPhotoDimensions(photo: PexelsPhoto): { width: string; height: string } {
+    const windowWidth = window.innerWidth * 0.95;
+    const windowHeight = window.innerHeight * 0.95;
     const scale = Math.min(windowWidth/photo.width, windowHeight/photo.height);
     const calcPixelValue = (val: number) => `${val * scale}px`;
     return {
       width: calcPixelValue(photo.width),
       height: calcPixelValue(photo.height)
     };
+  }
+
+  private _openPhotoDialog(width: string, height: string, photo: PexelsPhoto): Observable<boolean> {
+    return this.dialog
+      .open(PhotoDialogComponent, { width, height, data: photo })
+      .afterClosed()
+      .pipe(filter((dialogResult: boolean) => !!dialogResult))
   }
 }

@@ -1,4 +1,4 @@
-<div class="content" role="main">
+<div class="app" role="main">
   <!-- Header -->
   <!-- [searchFormControl]="searchFormControl" -->
   <app-header
@@ -6,7 +6,7 @@
   ></app-header>
 
   <!-- Gallery -->
-  <div class="gallery">
+  <div class="app__gallery">
     <app-photo
       *ngFor="let photo of photos$ | async"
       [photo]="photo"
@@ -14,3 +14,12 @@
     ></app-photo>  
   </div>
 </div>
+
+<!-- <a
+  #downloadRef
+  [attr.href]="download"
+  download="photo-download"
+  type="image/jpg"
+  id="download"
+  hidden
+></a> -->

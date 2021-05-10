@@ -1,3 +1,14 @@
-<object class="photo">
-  <embed type="image/jpg" [src]="data.url" />
-</object>
+<div class="photo-dialog">
+  <div class="photo-dialog__header">
+    <mat-icon>photo_camera</mat-icon>
+    <span class="photo-dialog__header-by">by</span>
+    <h2>{{ data.photographer }}</h2>
+  </div>
+  <object class="photo">
+    <embed type="image/jpg" [src]="data.expandedUrl" />
+  </object>
+  <button mat-button mat-dialog-close>Close</button>
+  <button mat-icon-button [mat-dialog-close]="true" cdkFocusInitial>
+    <mat-icon>file_download</mat-icon>
+  </button>
+</div>

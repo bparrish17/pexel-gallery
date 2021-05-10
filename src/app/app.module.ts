@@ -12,7 +12,9 @@ import { PhotoComponent } from './components/photo/photo.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxContentLoadingModule } from 'ngx-content-loading';
 import { PhotoDialogComponent } from './components/photo-dialog/photo-dialog.component';
-
+import { MatButtonModule } from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,10 @@ import { PhotoDialogComponent } from './components/photo-dialog/photo-dialog.com
     MatFormFieldModule,
     ReactiveFormsModule,
     NgxContentLoadingModule,
-    MatDialogModule
+    MatDialogModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSnackBarModule
   ],
   providers: [PexelsService],
   bootstrap: [AppComponent]

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError, map, pluck } from 'rxjs/operators';
+import { from, Observable, of } from 'rxjs';
+import { catchError, map, pluck, tap } from 'rxjs/operators';
 import { PexelsPhoto, PexelsSearchResponse, Photo } from '../models';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class PexelsService {
   private photosURL: string = `${this.baseURL}/v1`;
   // private videosURL: string = `${this.baseURL}/videos`;
 
-  constructor(private http: HttpClient, private sanitizer: DomSanitizer) {}
+  constructor(private _http: HttpClient, private _sanitizer: DomSanitizer, private _snackBar: MatSnackBar) {}
 
   public searchImages(query: string): Observable<Photo[]> {
     const headers = new HttpHeaders({ Authorization: this.api_key })
@@ -24,19 +25,27 @@ export class PexelsService {
       per_page: '30'
     };
     const options = { params, headers };
-    const sanitize = (url: string) => this.sanitizer.bypassSecurityTrustResourceUrl(url);
-    return this.http.get<PexelsSearchResponse>(`${this.photosURL}/search`, options).pipe(
+    const sanitize = (url: string) => this._sanitizer.bypassSecurityTrustResourceUrl(url);
+    return this._http.get<PexelsSearchResponse>(`${this.photosURL}/search`, options).pipe(
       pluck('photos'),
       map((photos: PexelsPhoto[]) => {
         return photos.map((photo) => {
           return {
             ...photo,
             galleryUrl: sanitize(photo.src.medium),
-            expandedUrl: sanitize(photo.src.original)
+            expandedUrl: sanitize(photo.src.large2x)
           }
         })
       }),
       catchError(() => of([]))
+    )
+  }
+
+  public getDownloadablePhotoUrl(url: string): Observable<string> {
+    const snackbarRef = this._snackBar.open('Downloading Image...', 'Dismiss')
+    return from(fetch(url).then((res) => res.blob())).pipe(
+      map((blob) => URL.createObjectURL(blob)),
+      tap(() => snackbarRef.dismiss())
     )
   }
 }
