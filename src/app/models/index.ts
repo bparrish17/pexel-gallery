@@ -1,4 +1,5 @@
 import { SafeUrl } from "@angular/platform-browser";
+import { Observable } from "rxjs";
 
 export interface PexelsSearchResponse {
 	page: number;
@@ -34,4 +35,10 @@ export interface PexelsPhoto {
 export interface Photo extends PexelsPhoto {
 	galleryUrl: SafeUrl;
 	expandedUrl: SafeUrl;
+}
+
+export interface GallerySection {
+	query: string;
+	page: number;
+	photos: Photo[];
 }

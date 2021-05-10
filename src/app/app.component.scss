@@ -2,12 +2,19 @@
 .app {
   background-color: #1c1c1c;
   color: white;
+  min-height: 100vh;
 
   &__gallery {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     padding: 20px 10px;
+  }
+
+  &__loader {
+    display: flex;
+    justify-content: center;
+    padding: 100px;
   }
 }
 

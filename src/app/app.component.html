@@ -1,25 +1,26 @@
 <div class="app" role="main">
   <!-- Header -->
-  <!-- [searchFormControl]="searchFormControl" -->
   <app-header
     (onSearchInput)="onSearchInputted($event)"
   ></app-header>
 
   <!-- Gallery -->
-  <div class="app__gallery">
+  <section
+    *ngFor="let photoSection of searchResults$ | async"
+    class="app__gallery"
+  >
     <app-photo
-      *ngFor="let photo of photos$ | async"
+      *ngFor="let photo of photoSection.photos"
       [photo]="photo"
       (onPhotoClick)="onPhotoClicked($event)"
     ></app-photo>  
+  </section>
+  
+  <div class="app__loader">
+    <mat-progress-spinner
+      *ngIf="loading"
+      mode="indeterminate"
+      color="accent"
+    ></mat-progress-spinner>
   </div>
 </div>
-
-<!-- <a
-  #downloadRef
-  [attr.href]="download"
-  download="photo-download"
-  type="image/jpg"
-  id="download"
-  hidden
-></a> -->

@@ -17,7 +17,6 @@ export class HeaderComponent implements OnInit {
 
   public onInputChanged(evt: any) {
     const input = evt?.target?.value;
-    console.log('input', input);
     this.onSearchInput.emit(input);
   }
 }

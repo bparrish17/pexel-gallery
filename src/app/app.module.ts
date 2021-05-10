@@ -4,7 +4,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AppComponent } from './app.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { PexelsService } from './services/pexels.service';
 import { HeaderComponent } from './components/header/header.component';
@@ -13,10 +12,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgxContentLoadingModule } from 'ngx-content-loading';
 import { PhotoDialogComponent } from './components/photo-dialog/photo-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { DialogOffsetDirective } from './directives/dialog-offset.directive';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -29,7 +30,7 @@ import { DialogOffsetDirective } from './directives/dialog-offset.directive';
   ],
   imports: [
     BrowserModule,
-    NoopAnimationsModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     MatInputModule,
     MatFormFieldModule,
@@ -39,7 +40,8 @@ import { DialogOffsetDirective } from './directives/dialog-offset.directive';
     MatButtonModule,
     MatIconModule,
     MatSnackBarModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatProgressSpinnerModule
   ],
   providers: [PexelsService],
   bootstrap: [AppComponent]

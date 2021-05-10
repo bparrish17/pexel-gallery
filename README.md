@@ -28,4 +28,17 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Credits
 
+[Math for Rectangle Dimensions](https://stackoverflow.com/questions/1373035/how-do-i-scale-one-rectangle-to-the-maximum-size-possible-within-another-rectang)
 [Download External URLs](https://stackoverflow.com/questions/51076581/download-images-using-html-or-javascript)
+
+## Wishlist
+
+More responsive error handling on pexels service fetching
+- retryWhen operator
+- clean up _getSearchResults
+- more responsive implementation of latestSearchResults
+- performance
+- more "complete" scss
+  - variables/mixins where applicable
+- proper components for the spinner, input field etc. (if it were necessary)
+- Full accessibility support
