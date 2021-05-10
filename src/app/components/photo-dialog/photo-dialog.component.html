@@ -1,12 +1,16 @@
 <div class="photo-dialog">
+  <!-- Header -->
   <div class="photo-dialog__header">
     <mat-icon>photo_camera</mat-icon>
     <span class="photo-dialog__header-by">by</span>
     <h2>{{ data.photographer }}</h2>
   </div>
-  <object class="photo">
-    <embed type="image/jpg" [src]="data.expandedUrl" />
-  </object>
+
+  <!-- Photo -->
+  <app-photo [photo]="data" size="expanded">
+  </app-photo>
+
+  <!-- Close FAB -->
   <button
     mat-fab
     mat-dialog-close
@@ -17,6 +21,8 @@
   >
     <mat-icon>close</mat-icon>
   </button>
+
+  <!-- Download FAB -->
   <button
     mat-fab
     appDialogOffset="bottom"
@@ -28,19 +34,3 @@
     <mat-icon>file_download</mat-icon>
   </button>
 </div>
-
-<!-- <ng-template
-  #fabButton
-  let-type
-  let-tooltip="tooltip"
-  let-icon="icon"
->
-<button
-  mat-fab
-  [matTooltip]="tooltip"
-  [class]="'photo-dialog__' + type + '-button'"
-  [mat-dialog-close]="true"
-  >
-    <mat-icon>file_download</mat-icon>
-  </button>
-</ng-template> -->

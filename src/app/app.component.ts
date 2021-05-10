@@ -45,8 +45,8 @@ export class AppComponent implements OnInit {
   public loading: boolean;
 
   constructor(
-    private pexelsService: PexelsService,
-    private dialog: MatDialog,
+    private _pexelsService: PexelsService,
+    private _dialog: MatDialog,
     @Inject(DOCUMENT) private document: Document
   ) {}
 
@@ -65,13 +65,13 @@ export class AppComponent implements OnInit {
 
   /**
    * Opens photo dialog and then downloads photo depending on result
-   * @param photo : PexelsPhoto
+   * @param photo : Photo
    */
-  public onPhotoClicked(photo: PexelsPhoto) {
+  public onPhotoClicked(photo: Photo) {
     const { width, height } = this._calculateMaxPhotoDimensions(photo);
     this._openPhotoDialog(width, height, photo).pipe(
       take(1), // handle close at max once
-      mergeMap(() => this.pexelsService.getDownloadablePhotoUrl(photo.src.original))
+      mergeMap(() => this._pexelsService.getDownloadablePhotoUrl(photo.src.original))
     ).subscribe((downloadableUrl: string) => {
       const a = document.createElement('a');
       a.href = downloadableUrl
@@ -101,14 +101,14 @@ export class AppComponent implements OnInit {
       tap(() => this.loading = true),
       switchMap((currentValue: string | boolean) => {
         if (typeof currentValue === 'string') {
-          return this.pexelsService.searchImages(currentValue).pipe(
+          return this._pexelsService.searchImages(currentValue).pipe(
             map((result: any) => [result])
           )
         } else {
           const mostRecentResult = this.latestResults[this.latestResults.length - 1];
           const currentPage = mostRecentResult?.page;
           const newPage = currentPage + 1;
-          return this.pexelsService.searchImages(mostRecentResult.query, newPage).pipe(
+          return this._pexelsService.searchImages(mostRecentResult.query, newPage).pipe(
             map((result: any) => [...this.latestResults, result])
           )
         }
@@ -144,10 +144,10 @@ export class AppComponent implements OnInit {
   /**
    * Calculates the pixel size for fitting the photo as large as possible into 
    * 90% of the window
-   * @param photo {PexelsPhoto} : Photo to calculate fit for
+   * @param photo {Photo} : Photo to calculate fit for
    * @returns { width: string; height: string } : dimensions
    */
-  private _calculateMaxPhotoDimensions(photo: PexelsPhoto): { width: string; height: string } {
+  private _calculateMaxPhotoDimensions(photo: Photo): { width: string; height: string } {
     const maxPercentOfWindow = 0.82;
     const windowWidth = window.innerWidth * maxPercentOfWindow;
     const windowHeight = window.innerHeight * maxPercentOfWindow;
@@ -163,11 +163,11 @@ export class AppComponent implements OnInit {
    * Opens photo dialog with provided config prameters
    * @param width : string
    * @param height : string
-   * @param photo : PexelsPhoto
+   * @param photo : Photo
    * @returns {Observable<boolean>} Emits value only if user hit download
    */
-  private _openPhotoDialog(width: string, height: string, photo: PexelsPhoto): Observable<boolean> {
-    return this.dialog
+  private _openPhotoDialog(width: string, height: string, photo: Photo): Observable<boolean> {
+    return this._dialog
       .open(PhotoDialogComponent, { width, height, data: photo })
       .afterClosed()
       .pipe(filter((dialogResult: boolean) => !!dialogResult)) // only proceed if download clicked

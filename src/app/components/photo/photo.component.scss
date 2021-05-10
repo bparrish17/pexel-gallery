@@ -1,5 +1,11 @@
 :host {
   display: flex; 
-  margin: 15px;
   cursor: pointer;
+
+  embed {
+    &.expanded {
+      width: 100%;
+      height: 100%;
+    }
+  }
 }

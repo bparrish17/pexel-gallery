@@ -31,6 +31,11 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 [Math for Rectangle Dimensions](https://stackoverflow.com/questions/1373035/how-do-i-scale-one-rectangle-to-the-maximum-size-possible-within-another-rectang)
 [Download External URLs](https://stackoverflow.com/questions/51076581/download-images-using-html-or-javascript)
 
+## Notes
+
+- I probably could've used the "next_page" part of the response on the searchResults call, but I preferred keeping things consistent
+  by using the same function arguments and passing in the previous page
+
 ## Wishlist
 
 More responsive error handling on pexels service fetching

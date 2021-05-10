@@ -1,3 +1,10 @@
-<object class="photo" (click)="onPhotoClicked()">
-  <embed type="image/jpg" [src]="photo.galleryUrl" />
+<object
+  class="photo"
+  (click)="onPhotoClicked()"
+>
+  <embed
+    type="image/jpg"
+    [class.expanded]="size === 'expanded'"
+    [src]="size === 'gallery' ? photo.galleryUrl : photo.expandedUrl" 
+  />
 </object>
