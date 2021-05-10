@@ -1,3 +1,16 @@
 <div class="content" role="main">
-  <h2>hello world</h2>
+  <!-- Header -->
+  <!-- [searchFormControl]="searchFormControl" -->
+  <app-header
+    (onSearchInput)="onSearchInputted($event)"
+  ></app-header>
+
+  <!-- Gallery -->
+  <div class="gallery">
+    <app-photo
+      *ngFor="let photo of photos$ | async"
+      [photo]="photo"
+      (onPhotoClick)="onPhotoClicked($event)"
+    ></app-photo>  
+  </div>
 </div>

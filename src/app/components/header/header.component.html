@@ -1,1 +1,13 @@
-<p>header works!</p>
+<div class="header">
+  <h1>Search the Pexels Gallery</h1>
+
+  <mat-form-field>
+    <mat-label>Search for Photos</mat-label>
+    <input
+      matInput
+      class="header__input"
+      value="city"
+      (input)="onInputChanged($event)"
+    >
+  </mat-form-field>
+</div>

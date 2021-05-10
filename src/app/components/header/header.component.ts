@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
@@ -6,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  @Input() searchFormControl: FormControl;
+  @Output() onSearchInput = new EventEmitter<string>();
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+  }
+
+  public onInputChanged(evt: any) {
+    const input = evt?.target?.value;
+    console.log('input', input);
+    this.onSearchInput.emit(input);
   }
 }

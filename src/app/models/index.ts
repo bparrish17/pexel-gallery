@@ -1,7 +1,9 @@
+import { SafeUrl } from "@angular/platform-browser";
+
 export interface PexelsSearchResponse {
 	page: number;
 	per_page: number;
-	photos: any[];
+	photos: PexelsPhoto[];
 	total_results: number;
 }
 
@@ -18,13 +20,18 @@ export interface PexelsSrcMap {
 
 export interface PexelsPhoto {
 	id: number;
-	avg_color: string; // hex code
+	avg_color: string; // hex code e.g. #ff0000
 	height: number;
 	width: number;
 	liked: boolean;
-	photographer: string;
+	photographer: string; // photographer name
 	photographer_id: number;
 	photographer_url: string;
 	src: PexelsSrcMap;
-	url: string;
+	url: string | SafeUrl;
+}
+
+export interface Photo extends PexelsPhoto {
+	galleryUrl: SafeUrl;
+	expandedUrl: SafeUrl;
 }
