@@ -7,8 +7,41 @@
   <object class="photo">
     <embed type="image/jpg" [src]="data.expandedUrl" />
   </object>
-  <button mat-button mat-dialog-close>Close</button>
-  <button mat-icon-button [mat-dialog-close]="true" cdkFocusInitial>
+  <button
+    mat-fab
+    mat-dialog-close
+    appDialogOffset
+    matTooltip="Close"
+    matTooltipPosition="right"
+    class="photo-dialog__close-button"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+  <button
+    mat-fab
+    cdkFocusInitial
+    appDialogOffset
+    matTooltip="Download"
+    matTooltipPosition="right"
+    class="photo-dialog__download-button"
+    [mat-dialog-close]="true"
+  >
     <mat-icon>file_download</mat-icon>
   </button>
 </div>
+
+<!-- <ng-template
+  #fabButton
+  let-type
+  let-tooltip="tooltip"
+  let-icon="icon"
+>
+<button
+  mat-fab
+  [matTooltip]="tooltip"
+  [class]="'photo-dialog__' + type + '-button'"
+  [mat-dialog-close]="true"
+  >
+    <mat-icon>file_download</mat-icon>
+  </button>
+</ng-template> -->

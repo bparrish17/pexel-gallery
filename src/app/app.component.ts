@@ -55,13 +55,14 @@ export class AppComponent implements OnInit {
    * @returns { width: string; height: string } : dimensions
    */
   private _calculateMaxPhotoDimensions(photo: PexelsPhoto): { width: string; height: string } {
-    const windowWidth = window.innerWidth * 0.95;
-    const windowHeight = window.innerHeight * 0.95;
+    const maxPercentOfWindow = 0.85;
+    const windowWidth = window.innerWidth * maxPercentOfWindow;
+    const windowHeight = window.innerHeight * maxPercentOfWindow;
     const scale = Math.min(windowWidth/photo.width, windowHeight/photo.height);
     const calcPixelValue = (val: number) => `${val * scale}px`;
     return {
       width: calcPixelValue(photo.width),
-      height: calcPixelValue(photo.height)
+      height: `${photo.height * scale + 62}px`
     };
   }
 

@@ -15,6 +15,9 @@ import { PhotoDialogComponent } from './components/photo-dialog/photo-dialog.com
 import { MatButtonModule } from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { DialogOffsetDirective } from './directives/dialog-offset.directive';
+
 
 @NgModule({
   declarations: [
@@ -22,6 +25,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     HeaderComponent,
     PhotoComponent,
     PhotoDialogComponent,
+    DialogOffsetDirective,
   ],
   imports: [
     BrowserModule,
@@ -34,7 +38,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatDialogModule,
     MatButtonModule,
     MatIconModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTooltipModule
   ],
   providers: [PexelsService],
   bootstrap: [AppComponent]
