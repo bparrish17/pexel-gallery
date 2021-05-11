@@ -2,16 +2,14 @@ import { Shallow } from "shallow-render";
 import { Photo } from '../../models';
 import { PhotoComponent } from './photo.component';
 import { AppModule } from "src/app/app.module";
-
 import { ɵDomSanitizerImpl } from '@angular/platform-browser/';
-import { bootstrapUnitTest } from "src/app/utils/helpers";
 
 export function fakeSanitize(value: string){
  const sanitizer = new ɵDomSanitizerImpl(document);
  return sanitizer.bypassSecurityTrustResourceUrl(value);
 }
 
-bootstrapUnitTest();
+
 
 describe('PhotoComponent', () => {
   const fakePhoto = { galleryUrl: fakeSanitize('test.com') }

@@ -1,9 +1,8 @@
 import { Shallow } from "shallow-render";
 import { HeaderComponent } from './header.component';
 import { AppModule } from "src/app/app.module";
-import { bootstrapUnitTest } from "src/app/utils/helpers";
 
-bootstrapUnitTest();
+
 
 describe('HeaderComponent', () => {
   let shallow: Shallow<HeaderComponent>;

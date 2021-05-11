@@ -1,13 +1,12 @@
 import { of } from "rxjs";
 import { Shallow } from "shallow-render";
 import { AppModule } from "src/app/app.module";
-import { bootstrapUnitTest } from "src/app/utils/helpers";
 import { AppComponent } from "./app.component";
 import { PexelsService } from "./services/pexels.service";
 
-bootstrapUnitTest();
 
-fdescribe('AppComponent', () => {
+
+describe('AppComponent', () => {
   let shallow: Shallow<AppComponent>;
 
   beforeEach(() => {
@@ -17,14 +16,12 @@ fdescribe('AppComponent', () => {
 
   it('should create', async () => {
     const { instance } = await shallow.render()
-    debugger;
     expect(instance).toBeDefined();
   });
 
   describe('[Method] onSearchInputted', () => {
     it('should next the photoSubject$ with provided input', async () => {
       const { instance } = await shallow.render();
-      debugger;
       const nextSpy = spyOn(instance.photosSubject$, 'next');
       instance.onSearchInputted('test')
       expect(nextSpy).toHaveBeenCalledWith('test');
@@ -35,7 +32,6 @@ fdescribe('AppComponent', () => {
     it('should fetch images on new search inputted', async (done) => {
       const { instance, get } = await shallow.render();
       const pexelsService = get(PexelsService);
-      debugger;
       // @ts-ignore
       instance._getSearchResults().subscribe(() => {
         expect(pexelsService.searchImages).toHaveBeenCalledWith('test search');
