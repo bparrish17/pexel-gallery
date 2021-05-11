@@ -9,7 +9,6 @@ import { PexelsService } from './services/pexels.service';
 import { HeaderComponent } from './components/header/header.component';
 import { PhotoComponent } from './components/photo/photo.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgxContentLoadingModule } from 'ngx-content-loading';
 import { PhotoDialogComponent } from './components/photo-dialog/photo-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -35,7 +34,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatInputModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    NgxContentLoadingModule,
     MatDialogModule,
     MatButtonModule,
     MatIconModule,

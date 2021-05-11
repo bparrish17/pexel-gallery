@@ -2,7 +2,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Shallow } from 'shallow-render';
-import { AppModule } from '../app.module';
 import { Photo } from '../models';
 
 export function bootstrapUnitTest() {
