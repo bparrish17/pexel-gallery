@@ -1,25 +1,36 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { Shallow } from "shallow-render";
+import { Photo } from '../../models';
 import { PhotoComponent } from './photo.component';
+import { AppModule } from "src/app/app.module";
+
+import { ɵDomSanitizerImpl } from '@angular/platform-browser/';
+import { bootstrapUnitTest } from "src/app/utils/helpers";
+
+export function fakeSanitize(value: string){
+ const sanitizer = new ɵDomSanitizerImpl(document);
+ return sanitizer.bypassSecurityTrustResourceUrl(value);
+}
+
+bootstrapUnitTest();
 
 describe('PhotoComponent', () => {
-  let component: PhotoComponent;
-  let fixture: ComponentFixture<PhotoComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ PhotoComponent ]
-    })
-    .compileComponents();
-  });
+  const fakePhoto = { galleryUrl: fakeSanitize('test.com') }
+  let shallow: Shallow<PhotoComponent>;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PhotoComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    shallow = new Shallow(PhotoComponent, AppModule);
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should create', async () => {
+    const { instance } = await shallow.render({ bind: { photo: fakePhoto }})
+    expect(instance).toBeDefined();
+  });
+
+  describe('[Method] onPhotoClicked', () => {
+    it('should emit instance photo on click', async () => {
+      const { instance } = await shallow.render({ bind: { photo: { galleryUrl: fakeSanitize('test.com') }}})
+      instance.onPhotoClicked();
+      expect(instance.onPhotoClick.emit).toHaveBeenCalledWith(fakePhoto as Photo);
+    })
   });
 });

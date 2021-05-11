@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -6,14 +6,8 @@ import { FormControl } from '@angular/forms';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
-  @Input() searchFormControl: FormControl;
+export class HeaderComponent {
   @Output() onSearchInput = new EventEmitter<string>();
-
-  constructor() { }
-
-  ngOnInit() {
-  }
 
   public onInputChanged(evt: any) {
     const input = evt?.target?.value;

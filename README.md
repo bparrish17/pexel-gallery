@@ -30,6 +30,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 [Math for Rectangle Dimensions](https://stackoverflow.com/questions/1373035/how-do-i-scale-one-rectangle-to-the-maximum-size-possible-within-another-rectang)
 [Download External URLs](https://stackoverflow.com/questions/51076581/download-images-using-html-or-javascript)
+[Cause I couldn't figure out how to fake the DomSanitizer](https://stackoverflow.com/questions/59802807/create-an-instance-of-the-abstract-class-domsanitizer)
 
 ## Notes
 
@@ -47,3 +48,4 @@ More responsive error handling on pexels service fetching
   - variables/mixins where applicable
 - proper components for the spinner, input field etc. (if it were necessary)
 - Full accessibility support
+- modules aliases for @services, @components

@@ -68,7 +68,7 @@ export class AppComponent implements OnInit {
    * @param photo : Photo
    */
   public onPhotoClicked(photo: Photo) {
-    const { width, height } = this._calculateMaxPhotoDimensions(photo);
+    const { width, height } = calculateMaxPhotoDimensions(photo);
     this._openPhotoDialog(width, height, photo).pipe(
       take(1), // handle close at max once
       mergeMap(() => this._pexelsService.getDownloadablePhotoUrl(photo.src.original))
@@ -142,24 +142,6 @@ export class AppComponent implements OnInit {
    **********************************************************/
 
   /**
-   * Calculates the pixel size for fitting the photo as large as possible into 
-   * 90% of the window
-   * @param photo {Photo} : Photo to calculate fit for
-   * @returns { width: string; height: string } : dimensions
-   */
-  private _calculateMaxPhotoDimensions(photo: Photo): { width: string; height: string } {
-    const maxPercentOfWindow = 0.82;
-    const windowWidth = window.innerWidth * maxPercentOfWindow;
-    const windowHeight = window.innerHeight * maxPercentOfWindow;
-    const scale = Math.min(windowWidth/photo.width, windowHeight/photo.height);
-    const calcPixelValue = (val: number) => `${val * scale}px`;
-    return {
-      width: calcPixelValue(photo.width),
-      height: `${photo.height * scale + 62}px`
-    };
-  }
-
-  /**
    * Opens photo dialog with provided config prameters
    * @param width : string
    * @param height : string
@@ -173,3 +155,7 @@ export class AppComponent implements OnInit {
       .pipe(filter((dialogResult: boolean) => !!dialogResult)) // only proceed if download clicked
   }
 }
+function calculateMaxPhotoDimensions(photo: Photo): { width: any; height: any; } {
+  throw new Error('Function not implemented.');
+}
+

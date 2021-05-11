@@ -1,31 +1,35 @@
-import { TestBed } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import { Shallow } from "shallow-render";
+import { AppModule } from "src/app/app.module";
+import { bootstrapUnitTest } from "src/app/utils/helpers";
+import { AppComponent } from "./app.component";
+
+bootstrapUnitTest();
 
 describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
+  let shallow: Shallow<AppComponent>;
+
+  beforeEach(() => {
+    shallow = new Shallow(AppComponent, AppModule);
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  it('should create', async () => {
+    const { instance } = await shallow.render()
+    expect(instance).toBeDefined();
   });
 
-  it(`should have as title 'pexel-gallery'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeDefined();
+  describe('[Method] onSearchInputted', () => {
+    it('should next the photoSubject$ with provided input', async () => {
+      const { instance } = await shallow.render();
+      const nextSpy = spyOn(instance.photosSubject$, 'next');
+      instance.onSearchInputted('test')
+      expect(nextSpy).toHaveBeenCalledWith('test');
+    })
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('pexel-gallery app is running!');
+  describe('[Method] _getSearchResults', () => {
+    it('should next the photoSubject$ with provided input', async () => {
+      const { instance } = await shallow.render();
+
+    })
   });
 });
