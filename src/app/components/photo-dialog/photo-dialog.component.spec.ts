@@ -3,7 +3,7 @@ import { PhotoDialogComponent } from './photo-dialog.component';
 import { AppModule } from "src/app/app.module";
 import { bootstrapUnitTest } from "src/app/utils/helpers";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { mockPexelsSearchResponse } from "src/app/mocks";
+import { mockPexelsSearchResponse } from "src/app/utils/mocks";
 
 bootstrapUnitTest();
 

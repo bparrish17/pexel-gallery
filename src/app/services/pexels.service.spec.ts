@@ -5,7 +5,7 @@ import { PexelsService } from './pexels.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
-import { mockPexelsSearchResponse } from '../mocks/index';
+import { mockPexelsSearchResponse } from '../utils/mocks';
 
 describe('PexelsService', () => {
   const expectedURL = 'https://api.pexels.com/v1/search?query=test&page=0&per_page=30';

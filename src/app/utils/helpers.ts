@@ -16,7 +16,7 @@ export function bootstrapUnitTest() {
    * @param photo {Photo} : Photo to calculate fit for
    * @returns { width: string; height: string } : dimensions
    */
-export function _calculateMaxPhotoDimensions(photo: Photo): { width: string; height: string } {
+export function calculateMaxPhotoDimensions(photo: Photo): { width: string; height: string } {
   const maxPercentOfWindow = 0.82;
   const windowWidth = window.innerWidth * maxPercentOfWindow;
   const windowHeight = window.innerHeight * maxPercentOfWindow;

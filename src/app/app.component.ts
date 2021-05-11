@@ -1,35 +1,24 @@
+// external
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { BehaviorSubject, fromEvent, merge, Observable, of } from 'rxjs';
-import { debounceTime, delay, filter, map, mapTo, mergeMap, pairwise, switchMap, take, tap } from 'rxjs/operators';
+import { BehaviorSubject, fromEvent, merge, Observable } from 'rxjs';
+import { debounceTime, filter, map, mapTo, mergeMap, switchMap, take, tap } from 'rxjs/operators';
+
+// internal
 import { PhotoDialogComponent } from './components/photo-dialog/photo-dialog.component';
-import { GallerySection, PexelsPhoto, Photo } from './models';
+import { GallerySection, Photo } from './models';
 import { PexelsService } from './services/pexels.service';
+import { calculateMaxPhotoDimensions } from './utils/helpers';
 
 /*
 
 Todos:
-- Add top vs bottom offset to offset directive
-- Unit tests
 - Organize imports
-  - Aliases in package.json
-- Update "Photo" interface uses
-- function documentation
-- ARIA
-- get consistent conventions with private _ in service injections
-- have photo component support either gallery or expanded size
 - "No Results" message
-- Loading spinner
 
 Edge Cases
 - Changes in window height while searching
-- 
-
-
-Gallery Notes
-- add observable property to 
-- just have service call return full result with query
 
 */
 @Component({
@@ -100,6 +89,7 @@ export class AppComponent implements OnInit {
     ).pipe(
       tap(() => this.loading = true),
       switchMap((currentValue: string | boolean) => {
+        console.log('curre', currentValue);
         if (typeof currentValue === 'string') {
           return this._pexelsService.searchImages(currentValue).pipe(
             map((result: any) => [result])
@@ -114,7 +104,6 @@ export class AppComponent implements OnInit {
         }
       }),
       tap((results) => {
-        console.log(results);
         this.loading = false;
         this.latestResults = results
       }),
@@ -155,7 +144,3 @@ export class AppComponent implements OnInit {
       .pipe(filter((dialogResult: boolean) => !!dialogResult)) // only proceed if download clicked
   }
 }
-function calculateMaxPhotoDimensions(photo: Photo): { width: any; height: any; } {
-  throw new Error('Function not implemented.');
-}
-
