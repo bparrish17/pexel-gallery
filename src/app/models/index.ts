@@ -28,12 +28,13 @@ export interface PexelsPhoto {
 	photographer_id: number;
 	photographer_url: string;
 	src: PexelsSrcMap;
-	url: string | SafeUrl;
+	url: string;
 }
 
 export interface Photo extends PexelsPhoto {
 	galleryUrl: SafeUrl;
 	expandedUrl: SafeUrl;
+	alt: string;
 }
 
 export interface GallerySection {

@@ -4,6 +4,7 @@
 >
   <embed
     type="image/jpg"
+    [alt]="data.alt"
     [class.expanded]="size === 'expanded'"
     [src]="size === 'gallery' ? photo?.galleryUrl : photo?.expandedUrl" 
   />

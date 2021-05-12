@@ -34,6 +34,8 @@
     *ngIf="(emptyResults$ | async) && !loading"
     class="app__no-results"
   >
-    <h2>No Results Found for Search</h2>
+    <h2 aria-label="No Results Found For Search">
+      No Results Found for Search
+    </h2>
   </div>
 </div>
