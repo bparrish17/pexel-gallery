@@ -3,6 +3,8 @@
 ## Getting Started
 
 - Clone this directory
+- get an API Key for pixels [here](https://www.pexels.com/api)
+- replace the private api_key property in pexels.service with the key you get from that account
 - run `npm start` - will install modules and run `ng serve` to start application
 - run `npm test` to run the test suite
 - Node: `v14.16.0`
