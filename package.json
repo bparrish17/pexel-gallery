@@ -10,7 +10,8 @@
     "e2e": "ng e2e",
     "deploy": "npm run build:prod && npm run add-404-page",
     "build:prod": "ng build --prod --output-path docs --base-href /pexel-gallery/",
-    "add-404-page": "cd docs/ && touch 404.html"
+    "add-404-page": "cd docs/ && touch 404.html",
+    "init-credentials": "cd src && touch secrets.ts && cd ."
   },
   "private": true,
   "dependencies": {

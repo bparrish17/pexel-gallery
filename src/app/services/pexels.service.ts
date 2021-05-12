@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 // internal
 import { GallerySection, PexelsSearchResponse } from '../models';
 import { API_KEY } from 'src/secrets';
+import { createAltTagForPhoto } from '../utils/helpers';
 
 @Injectable({ providedIn: 'root' })
 export class PexelsService {
@@ -71,7 +72,8 @@ export class PexelsService {
       return {
         ...photo,
         galleryUrl: sanitize(photo.src.medium),
-        expandedUrl: sanitize(photo.src.large2x)
+        expandedUrl: sanitize(photo.src.large2x),
+        alt: createAltTagForPhoto(photo.url)
       }
     })
     return { photos, page: Number(response.page), query }

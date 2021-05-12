@@ -17,3 +17,9 @@ export function calculateMaxPhotoDimensions(photo: Photo): { width: string; heig
     height: `${photo.height * scale + 62}px`
   };
 }
+
+export function createAltTagForPhoto(photoUrl: string): string {
+  const splitURL = photoUrl.split('/');
+  const possibleAlt = splitURL[splitURL.length - 2] || '';
+  return possibleAlt.replace(/-/g, ' ');
+}
