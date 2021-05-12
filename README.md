@@ -4,12 +4,14 @@
 
 ## Getting Started
 
-- Clone this directory
-- get an API Key for pixels [here](https://www.pexels.com/api)
-- replace the private api_key property in pexels.service with the key you get from that account
-- run `npm start` - will install modules and run `ng serve` to start application
-- run `npm test` to run the test suite
-- Node: `v14.16.0`
+1. Clone this directory
+2. get an API Key for pixels [here](https://www.pexels.com/api)
+3. run `npm init-credentials`
+4. in the newly created `src/secrets.ts`, add `export const API_KEY = 'your-api-key-here'`
+5. run `npm start` - will install modules and run `ng serve` to start application
+6. run `npm test` to run the test suite
+  - note: this will also require API_KEY to be created (although it can be a dummy value)
+- Note: Node version `14.16.0`
 
 ## Commands
 
