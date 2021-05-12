@@ -6,18 +6,18 @@
 
 1. Clone this directory
 2. get an API Key for pixels [here](https://www.pexels.com/api)
-3. run `npm init-credentials`
+3. run `npm run init-credentials`
 4. in the newly created `src/secrets.ts`, add `export const API_KEY = 'your-api-key-here'`
 5. run `npm start` - will install modules and run `ng serve` to start application
-6. run `npm test` to run the test suite
+  - The app will automatically reload if you change any of the source files.
+6. Open application at `localhost:4200`
+7. run `npm test` to run the test suite
   - note: this will also require API_KEY to be created (although it can be a dummy value)
 - Note: Node version `14.16.0`
 
-## Commands
+## Other Commands
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
 ## Credits
