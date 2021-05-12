@@ -20,9 +20,14 @@ describe('HeaderComponent', () => {
       expect(find('h1').nativeElement.textContent).toBe('Pexels Gallery');
     })
 
-    it('Should have input with initial value of "city"', async () => {
+    it('Should have input with initial value of none', async () => {
       const { find } = await shallow.render();
-      expect(find('input').nativeElement.value).toBe('city');
+      expect(find('input').nativeElement.value).toBe('');
+    })
+
+    it('Should have input with placeholder of "Search for photos..."', async () => {
+      const { find } = await shallow.render();
+      expect(find('input').nativeElement.placeholder).toBe('Search for photos...');
     })
   });
 

@@ -18,7 +18,7 @@ describe('PhotoDialogComponent', () => {
     const mockDialogRef = { close: () => {}, afterOpened: () => of(true) }
     shallow = new Shallow(PhotoDialogComponent, AppModule);
     const { instance: inst, find: f } = await shallow
-      .provide({ provide: MatDialogRef, useValue: mockDialogRef })
+      .provideMock({ provide: MatDialogRef, useValue: mockDialogRef })
       .provideMock({ provide: MAT_DIALOG_DATA, useValue: fakePhoto })
       .render()
     instance = inst;

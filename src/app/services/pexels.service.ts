@@ -32,11 +32,13 @@ export class PexelsService {
     const headers = new HttpHeaders({ Authorization: this.api_key })
     const params = {
       query,
-      page: page ? `${page}` : '0',
+      page: page ? `${page}` : '1', // api page index starts at 1
       per_page: '30'
     };
     const options = { params, headers };
-    return this.searchImages(options).pipe(
+    // if no query, get curated selection
+    const request = query.length > 0 ? this.searchImages(options) : this.getCuratedImages(options);
+    return request.pipe(
       map((response: PexelsSearchResponse) => this._convertResponseToGallerySection(query, response)),
       catchError(() => of({ photos: [], page: 0, query }))
     );
@@ -44,6 +46,10 @@ export class PexelsService {
 
   public searchImages(options: { params: any, headers: any }): Observable<PexelsSearchResponse> {
     return this._http.get<PexelsSearchResponse>(`${this.photosURL}/search`, options);
+  }
+
+  public getCuratedImages(options: { params: any, headers: any }): Observable<PexelsSearchResponse> {
+    return this._http.get<PexelsSearchResponse>(`${this.photosURL}/curated`, options);
   }
 
   /**

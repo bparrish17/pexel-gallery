@@ -12,6 +12,7 @@ import { Photo } from 'src/app/models';
 })
 export class PhotoDialogComponent {
   public hasOpened$: Observable<boolean>
+  
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: Photo,
     public dialogRef: MatDialogRef<PhotoDialogComponent>
