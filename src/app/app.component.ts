@@ -11,17 +11,6 @@ import { GallerySection, Photo } from './models';
 import { PexelsService } from './services/pexels.service';
 import { calculateMaxPhotoDimensions } from './utils/helpers';
 
-/*
-
-Todos:
-- Organize imports
-- deploy
-- move api_key to secrets
-
-Edge Cases
-- Changes in window height while searching
-
-*/
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
