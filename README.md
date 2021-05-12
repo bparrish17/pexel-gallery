@@ -29,12 +29,12 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 ## Wishlist
 
-- Accessibility
-- More responsive error handling on pexels service fetching
+- **Accessibility improvements**
 - performance handling of infinite scroll
+  - hide images by section
 - proper components for the spinner, input field etc. (if it were necessary)
 - modules aliases for `@services`, `@components`
 - `retryWhen` operator for failed search queries
-- SCSS Variables/theming
-- Animation to displayed for fab buttons on dialog
+- Consistently used SCSS Variables/theming
+- Animation to display for fab buttons on dialog
 - More extensive directive tests
