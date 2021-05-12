@@ -1,13 +1,16 @@
 {
   "name": "pexel-gallery",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "scripts": {
     "ng": "ng",
     "start": "npm i && ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "deploy": "npm run build:prod && npm run add-404-page",
+    "build:prod": "ng build --prod --output-path docs --base-href /pexel-gallery/",
+    "add-404-page": "cd docs/ && touch 404.html"
   },
   "private": true,
   "dependencies": {
