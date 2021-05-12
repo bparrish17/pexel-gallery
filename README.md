@@ -30,7 +30,6 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Wishlist
 
 - **Accessibility improvements**
-- img tag vs object/embed rework
 - performance handling of infinite scroll
   - hide images by section
 - proper components for the spinner, input field etc. (if it were necessary)

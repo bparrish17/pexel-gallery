@@ -1,10 +1,8 @@
-<object
+<img
   class="photo"
+  [alt]="photo.alt"
+  [attr.aria-label]="photo.alt"
+  [class.expanded]="size === 'expanded'"
+  [src]="size === 'gallery' ? photo?.galleryUrl : photo?.expandedUrl" 
   (click)="onPhotoClicked()"
->
-  <embed
-    type="image/jpg"
-    [class.expanded]="size === 'expanded'"
-    [src]="size === 'gallery' ? photo?.galleryUrl : photo?.expandedUrl" 
-  />
-</object>
+/>
