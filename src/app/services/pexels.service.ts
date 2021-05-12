@@ -8,10 +8,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 // internal
 import { GallerySection, PexelsSearchResponse } from '../models';
+import { API_KEY } from 'src/secrets';
 
 @Injectable({ providedIn: 'root' })
 export class PexelsService {
-  private api_key: string = '563492ad6f91700001000001cf90ff95995f419da77b43146fa201e6';
+  private api_key: string = API_KEY; // for local development replace with your API Key here
   private baseURL: string = 'https://api.pexels.com'
   private photosURL: string = `${this.baseURL}/v1`;
 
