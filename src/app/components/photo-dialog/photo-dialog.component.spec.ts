@@ -1,9 +1,12 @@
+// external
 import { Shallow } from "shallow-render";
-import { PhotoDialogComponent } from './photo-dialog.component';
-import { AppModule } from "src/app/app.module";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { mockPexelsSearchResponse } from "src/app/utils/mocks";
 import { Observable, of } from "rxjs";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+
+// internal
+import { AppModule } from "src/app/app.module";
+import { mockPexelsSearchResponse } from "src/app/utils/mocks";
+import { PhotoDialogComponent } from './photo-dialog.component';
 
 describe('PhotoDialogComponent', () => {
   const fakePhoto = mockPexelsSearchResponse.photos[0];
@@ -15,7 +18,7 @@ describe('PhotoDialogComponent', () => {
     const mockDialogRef = { close: () => {}, afterOpened: () => of(true) }
     shallow = new Shallow(PhotoDialogComponent, AppModule);
     const { instance: inst, find: f } = await shallow
-      .provide({ provide: MatDialogRef, useValue: mockDialogRef })
+      .provideMock({ provide: MatDialogRef, useValue: mockDialogRef })
       .provideMock({ provide: MAT_DIALOG_DATA, useValue: fakePhoto })
       .render()
     instance = inst;

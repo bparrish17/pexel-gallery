@@ -12,6 +12,7 @@
     <app-photo
       *ngFor="let photo of photoSection.photos"
       [style.margin]="'15px'"
+      [style.cursor]="'pointer'"
       [photo]="photo"
       (onPhotoClick)="onPhotoClicked($event)"
     ></app-photo>  

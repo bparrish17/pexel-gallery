@@ -3,7 +3,18 @@ import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, fromEvent, merge, Observable } from 'rxjs';
-import { debounceTime, filter, map, mapTo, mergeMap, switchMap, take, tap, throttleTime } from 'rxjs/operators';
+import {
+  debounceTime,
+  filter,
+  map,
+  mapTo,
+  mergeMap,
+  shareReplay,
+  switchMap,
+  take,
+  tap,
+  throttleTime
+} from 'rxjs/operators';
 
 // internal
 import { PhotoDialogComponent } from './components/photo-dialog/photo-dialog.component';
@@ -11,17 +22,6 @@ import { GallerySection, Photo } from './models';
 import { PexelsService } from './services/pexels.service';
 import { calculateMaxPhotoDimensions } from './utils/helpers';
 
-/*
-
-Todos:
-- Organize imports
-- deploy
-- move api_key to secrets
-
-Edge Cases
-- Changes in window height while searching
-
-*/
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -29,7 +29,7 @@ Edge Cases
 })
 export class AppComponent implements OnInit {
   public photos$: Observable<Photo[]>;
-  public photosSubject$ = new BehaviorSubject<string>('city');
+  public photosSubject$ = new BehaviorSubject<string>('');
   public latestResults: GallerySection[];
   public searchResults$: Observable<GallerySection[]>;
   public emptyResults$: Observable<boolean>;
@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.searchResults$ = this._getSearchResults()
+    this.searchResults$ = this._getSearchResults().pipe(shareReplay(1))
     this.emptyResults$ = this.searchResults$.pipe(map((gallerySections) => {
       return !gallerySections || gallerySections.length === 0 || gallerySections[0]?.photos?.length === 0;
     }))
@@ -126,7 +126,7 @@ export class AppComponent implements OnInit {
         return (scrollY + window.innerHeight) === this.document.body.scrollHeight;
       }),
       mapTo(true), // if passes filter, return true otherwise do not emit to observers
-      throttleTime(500), // prevent new values from emitting while loading new results
+      throttleTime(200), // prevent new values from emitting while loading new results
     )
   }
 

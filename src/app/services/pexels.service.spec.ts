@@ -10,12 +10,13 @@ import { PexelsService } from './pexels.service';
 import { mockPexelsSearchResponse } from '../utils/mocks';
 
 describe('PexelsService', () => {
-  const expectedURL = 'https://api.pexels.com/v1/search?query=test&page=0&per_page=30';
+  const searchURL = 'https://api.pexels.com/v1/search?query=test&page=1&per_page=30';
+  const curatedURL = 'https://api.pexels.com/v1/curated?query=test&page=1&per_page=30';
   let service: PexelsService;
   let httpTestingController: HttpTestingController;
   const params = {
     query: 'test',
-    page: '0',
+    page: '1',
     per_page: '30'
   };
 
@@ -40,7 +41,23 @@ describe('PexelsService', () => {
 
     it('should hit the Pexels API with the expected parameters', (done) => {
       service.searchImages(options).subscribe()
-      const req = httpTestingController.expectOne(expectedURL)
+      const req = httpTestingController.expectOne(searchURL)
+      req.flush({});
+      expect(req.request.method).toEqual('GET')
+      done()
+    });
+  });
+
+  describe('[Method] getCuratedImages', () => {
+    const options = { params, headers: null };
+    it('should return an observable', () => {
+      const call = service.getCuratedImages(options)
+      expect(call).toBeInstanceOf(Observable);
+    });
+
+    it('should hit the Pexels API with the expected parameters', (done) => {
+      service.getCuratedImages(options).subscribe()
+      const req = httpTestingController.expectOne(curatedURL)
       req.flush({});
       expect(req.request.method).toEqual('GET')
       done()
@@ -59,6 +76,12 @@ describe('PexelsService', () => {
       expect(call).toBeInstanceOf(Observable);
     });
 
+    it('should get curated results if no query provided', () => {
+      const getSpy = spyOn(service, 'getCuratedImages').and.returnValue(of(mockPexelsSearchResponse));
+      service.getGalleryResults('')
+      expect(getSpy).toHaveBeenCalled();
+    });
+
     it('should hit the Pexels API with the expected parameters', (done) => {
       service.getGalleryResults('test').subscribe(() => {
         expect(searchSpy).toHaveBeenCalledWith({ params, headers: jasmine.any(Object) });
@@ -68,7 +91,7 @@ describe('PexelsService', () => {
     });
 
     it('should hit the Pexels API with provided page', (done) => {
-      service.getGalleryResults('test', 3).subscribe(() => {
+      service.getGalleryResults('test', 4).subscribe(() => {
         expect(searchSpy).toHaveBeenCalledWith({ params: { ...params, page: '4' }, headers: jasmine.any(Object) });
         done();
       })

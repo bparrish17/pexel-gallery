@@ -1,11 +1,8 @@
 import { DOCUMENT } from '@angular/common';
 import { Directive, ElementRef, Inject, Input } from '@angular/core';
 
-@Directive({
-  selector: '[appDialogOffset]'
-})
+@Directive({ selector: '[appDialogOffset]' })
 export class DialogOffsetDirective {
-
   @Input() appDialogOffset: 'top' | 'bottom';
 
   constructor(
