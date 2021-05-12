@@ -21,5 +21,5 @@ export function calculateMaxPhotoDimensions(photo: Photo): { width: string; heig
 export function createAltTagForPhoto(photoUrl: string): string {
   const splitURL = photoUrl.split('/');
   const possibleAlt = splitURL[splitURL.length - 2] || '';
-  return possibleAlt.replace(/-/g, ' ');
+  return possibleAlt.replace(/-/g, ' ').replace(/[0-9]/g, '');
 }
