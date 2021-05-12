@@ -18,6 +18,14 @@ export function calculateMaxPhotoDimensions(photo: Photo): { width: string; heig
   };
 }
 
+/**
+ * Use URL to create Alt tag on img
+ * @param photoUrl 
+ * @returns string : parsed version of photoURL
+ * @description the Pexels api consistently returns a parsed description with hyphens and 
+ * numbers for each photo. we're going to remove those to create a reliable alt tag
+ * and aria-label
+ */
 export function createAltTagForPhoto(photoUrl: string): string {
   const splitURL = photoUrl.split('/');
   const possibleAlt = splitURL[splitURL.length - 2] || '';
