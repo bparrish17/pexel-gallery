@@ -4,8 +4,6 @@ import { AppModule } from "src/app/app.module";
 import { AppComponent } from "./app.component";
 import { PexelsService } from "./services/pexels.service";
 
-
-
 describe('AppComponent', () => {
   let shallow: Shallow<AppComponent>;
 
