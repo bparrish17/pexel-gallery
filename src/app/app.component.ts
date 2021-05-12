@@ -3,7 +3,7 @@ import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, fromEvent, merge, Observable } from 'rxjs';
-import { debounceTime, filter, map, mapTo, mergeMap, switchMap, take, tap } from 'rxjs/operators';
+import { debounceTime, delay, filter, map, mapTo, mergeMap, switchMap, take, tap, throttleTime } from 'rxjs/operators';
 
 // internal
 import { PhotoDialogComponent } from './components/photo-dialog/photo-dialog.component';
@@ -15,7 +15,7 @@ import { calculateMaxPhotoDimensions } from './utils/helpers';
 
 Todos:
 - Organize imports
-- "No Results" message
+- move api_key to secrets
 
 Edge Cases
 - Changes in window height while searching
@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
   public photosSubject$ = new BehaviorSubject<string>('city');
   public latestResults: GallerySection[];
   public searchResults$: Observable<GallerySection[]>;
+  public emptyResults$: Observable<boolean>;
   public loading: boolean;
 
   constructor(
@@ -41,6 +42,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.searchResults$ = this._getSearchResults()
+    this.emptyResults$ = this.searchResults$.pipe(map((gallerySections) => {
+      return !gallerySections || gallerySections.length === 0 || gallerySections[0]?.photos?.length === 0;
+    }))
   }
 
 
@@ -89,16 +93,15 @@ export class AppComponent implements OnInit {
     ).pipe(
       tap(() => this.loading = true),
       switchMap((currentValue: string | boolean) => {
-        console.log('curre', currentValue);
         if (typeof currentValue === 'string') {
-          return this._pexelsService.searchImages(currentValue).pipe(
+          return this._pexelsService.getGalleryResults(currentValue).pipe(
             map((result: any) => [result])
           )
         } else {
           const mostRecentResult = this.latestResults[this.latestResults.length - 1];
           const currentPage = mostRecentResult?.page;
           const newPage = currentPage + 1;
-          return this._pexelsService.searchImages(mostRecentResult.query, newPage).pipe(
+          return this._pexelsService.getGalleryResults(mostRecentResult.query, newPage).pipe(
             map((result: any) => [...this.latestResults, result])
           )
         }
@@ -121,7 +124,8 @@ export class AppComponent implements OnInit {
         // proceed if we've reached the bottom of the window, otherwise emit nothign
         return (scrollY + window.innerHeight) === this.document.body.scrollHeight;
       }),
-      mapTo(true) // if passes filter, return true otherwise do not emit to observers
+      mapTo(true), // if passes filter, return true otherwise do not emit to observers
+      throttleTime(500), // prevent new values from emitting while loading new results
     )
   }
 

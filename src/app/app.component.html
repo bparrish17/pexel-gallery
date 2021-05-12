@@ -18,11 +18,21 @@
   </section>
   
   <!-- Loader -->
-  <div class="app__loader">
+  <div
+    *ngIf="loading"
+    class="app__loader"
+  >
     <mat-progress-spinner
-      *ngIf="loading"
       mode="indeterminate"
       color="accent"
     ></mat-progress-spinner>
+  </div>
+
+  <!-- Loader -->
+  <div 
+    *ngIf="(emptyResults$ | async) && !loading"
+    class="app__no-results"
+  >
+    <h2>No Results Found for Search</h2>
   </div>
 </div>

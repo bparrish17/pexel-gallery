@@ -5,6 +5,7 @@
 - Clone this directory
 - run `npm start` - will install modules and run `ng serve` to start application
 - run `npm test` to run the test suite
+- Node: `v14.16.0`
 
 ## Commands
 

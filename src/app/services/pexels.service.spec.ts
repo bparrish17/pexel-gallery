@@ -1,16 +1,23 @@
+// external
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-
-import { PexelsService } from './pexels.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+
+// internal
+import { PexelsService } from './pexels.service';
 import { mockPexelsSearchResponse } from '../utils/mocks';
 
 describe('PexelsService', () => {
   const expectedURL = 'https://api.pexels.com/v1/search?query=test&page=0&per_page=30';
   let service: PexelsService;
   let httpTestingController: HttpTestingController;
+  const params = {
+    query: 'test',
+    page: '0',
+    per_page: '30'
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -25,28 +32,49 @@ describe('PexelsService', () => {
   });
 
   describe('[Method] searchImages', () => {
+    const options = { params, headers: null };
     it('should return an observable', () => {
-      const call = service.searchImages('test')
+      const call = service.searchImages(options)
       expect(call).toBeInstanceOf(Observable);
     });
 
     it('should hit the Pexels API with the expected parameters', (done) => {
-      service.searchImages('test').subscribe()
+      service.searchImages(options).subscribe()
       const req = httpTestingController.expectOne(expectedURL)
       req.flush({});
       expect(req.request.method).toEqual('GET')
+      done()
+    });
+  });
+
+  describe('[Method] getGalleryResults', () => {
+    let searchSpy: jasmine.Spy;
+
+    beforeEach(() => {
+      searchSpy = spyOn(service, 'searchImages').and.returnValue(of(mockPexelsSearchResponse))
+    })
+    
+    it('should return an observable', () => {
+      const call = service.getGalleryResults('test')
+      expect(call).toBeInstanceOf(Observable);
+    });
+
+    it('should hit the Pexels API with the expected parameters', (done) => {
+      service.getGalleryResults('test').subscribe(() => {
+        const headers = {}
+        expect(searchSpy).toHaveBeenCalledWith({ params, headers: jasmine.any(Object) });
+        done();
+      })
       done()
     });
 
     it('should convert result into a gallery section', (done) => {
       // @ts-ignore
       const convertSpy = spyOn(service, '_convertResponseToGallerySection');
-      service.searchImages('test').subscribe(() => {
+      service.getGalleryResults('test').subscribe(() => {
         expect(convertSpy).toHaveBeenCalled();
         done();
       })
-      const req = httpTestingController.expectOne(expectedURL)
-      req.flush(mockPexelsSearchResponse);
     });
 
     it('should respond with empty response on error', (done) => {
@@ -54,12 +82,10 @@ describe('PexelsService', () => {
       spyOn(service, '_convertResponseToGallerySection').and.callFake(() => {
         throw new Error()
       });
-      service.searchImages('test').subscribe((result) => {
+      service.getGalleryResults('test').subscribe((result) => {
         expect(result).toEqual({ photos: [], page: 0, query: 'test' })
         done();
       })
-      const req = httpTestingController.expectOne(expectedURL)
-      req.flush(mockPexelsSearchResponse);
     });
   })
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { from, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { GallerySection, PexelsSearchResponse } from '../models';
@@ -24,7 +24,7 @@ export class PexelsService {
    * @param page (optional) : number
    * @returns {Observable<GallerySection>} Observable resolving to a section of 30 photos
    */
-  public searchImages(query: string, page?: number): Observable<GallerySection> {
+  public getGalleryResults(query: string, page?: number): Observable<GallerySection> {
     const headers = new HttpHeaders({ Authorization: this.api_key })
     const params = {
       query,
@@ -32,11 +32,14 @@ export class PexelsService {
       per_page: '30'
     };
     const options = { params, headers };
-    // return of(fakeData).pipe(
-      return this._http.get<PexelsSearchResponse>(`${this.photosURL}/search`, options).pipe(
-        map((response: PexelsSearchResponse) => this._convertResponseToGallerySection(query, response)),
-        catchError(() => of({ photos: [], page: 0, query }))
+    return this.searchImages(options).pipe(
+      map((response: PexelsSearchResponse) => this._convertResponseToGallerySection(query, response)),
+      catchError(() => of({ photos: [], page: 0, query }))
     );
+  }
+
+  public searchImages(options: { params: any, headers: any }): Observable<PexelsSearchResponse> {
+    return this._http.get<PexelsSearchResponse>(`${this.photosURL}/search`, options);
   }
 
   /**
@@ -55,12 +58,12 @@ export class PexelsService {
   private _convertResponseToGallerySection(query: string, response: PexelsSearchResponse): GallerySection {
     const sanitize = (url: string) => this._sanitizer.bypassSecurityTrustResourceUrl(url);
     const photos = response.photos.map((photo) => {
-    return {
-      ...photo,
-      galleryUrl: sanitize(photo.src.medium),
-      expandedUrl: sanitize(photo.src.large2x)
-    }
-  })
-  return { photos, page: Number(response.page), query }
+      return {
+        ...photo,
+        galleryUrl: sanitize(photo.src.medium),
+        expandedUrl: sanitize(photo.src.large2x)
+      }
+    })
+    return { photos, page: Number(response.page), query }
   }
 }

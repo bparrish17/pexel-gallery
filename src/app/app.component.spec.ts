@@ -11,7 +11,7 @@ describe('AppComponent', () => {
 
   beforeEach(() => {
     shallow = new Shallow(AppComponent, AppModule);
-    shallow.mock(PexelsService, { searchImages: () => of({}) })
+    shallow.mock(PexelsService, { getGalleryResults: () => of({}) })
   });
 
   it('should create', async () => {
@@ -34,7 +34,7 @@ describe('AppComponent', () => {
       const pexelsService = get(PexelsService);
       // @ts-ignore
       instance._getSearchResults().subscribe(() => {
-        expect(pexelsService.searchImages).toHaveBeenCalledWith('test search');
+        expect(pexelsService.getGalleryResults).toHaveBeenCalledWith('test search');
         done();
       })
       instance.photosSubject$.next('test search')
@@ -46,7 +46,7 @@ describe('AppComponent', () => {
       const pexelsService = get(PexelsService);
       // @ts-ignore
       instance._getSearchResults().subscribe(() => {
-        expect(pexelsService.searchImages).toHaveBeenCalledWith('test', 4);
+        expect(pexelsService.getGalleryResults).toHaveBeenCalledWith('test', 4);
         done();
       })
       // @ts-ignore

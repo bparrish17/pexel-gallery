@@ -7,7 +7,7 @@ import { Photo } from '../models';
    * @returns { width: string; height: string } : dimensions
    */
 export function calculateMaxPhotoDimensions(photo: Photo): { width: string; height: string } {
-  const maxPercentOfWindow = 0.82;
+  const maxPercentOfWindow = 0.82; // just a preference for what modal size I felt fit best on page
   const windowWidth = window.innerWidth * maxPercentOfWindow;
   const windowHeight = window.innerHeight * maxPercentOfWindow;
   const scale = Math.min(windowWidth/photo.width, windowHeight/photo.height);
