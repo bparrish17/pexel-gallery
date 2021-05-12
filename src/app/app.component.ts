@@ -3,7 +3,7 @@ import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, fromEvent, merge, Observable } from 'rxjs';
-import { debounceTime, delay, filter, map, mapTo, mergeMap, switchMap, take, tap, throttleTime } from 'rxjs/operators';
+import { debounceTime, filter, map, mapTo, mergeMap, switchMap, take, tap, throttleTime } from 'rxjs/operators';
 
 // internal
 import { PhotoDialogComponent } from './components/photo-dialog/photo-dialog.component';
@@ -15,6 +15,7 @@ import { calculateMaxPhotoDimensions } from './utils/helpers';
 
 Todos:
 - Organize imports
+- deploy
 - move api_key to secrets
 
 Edge Cases

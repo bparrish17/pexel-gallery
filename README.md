@@ -30,3 +30,5 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 - modules aliases for `@services`, `@components`
 - `retryWhen` operator for failed search queries
 - SCSS Variables/theming
+- Animation to displayed for fab buttons on dialog
+- More extensive directive tests

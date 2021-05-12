@@ -1,10 +1,13 @@
+// external
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { from, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { GallerySection, PexelsSearchResponse } from '../models';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+// internal
+import { GallerySection, PexelsSearchResponse } from '../models';
 
 @Injectable({ providedIn: 'root' })
 export class PexelsService {

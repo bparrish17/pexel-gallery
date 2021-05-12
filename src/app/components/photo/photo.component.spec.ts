@@ -9,8 +9,6 @@ export function fakeSanitize(value: string){
  return sanitizer.bypassSecurityTrustResourceUrl(value);
 }
 
-
-
 describe('PhotoComponent', () => {
   const fakePhoto = { galleryUrl: fakeSanitize('test.com') }
   let shallow: Shallow<PhotoComponent>;

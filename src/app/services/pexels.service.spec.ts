@@ -61,8 +61,15 @@ describe('PexelsService', () => {
 
     it('should hit the Pexels API with the expected parameters', (done) => {
       service.getGalleryResults('test').subscribe(() => {
-        const headers = {}
         expect(searchSpy).toHaveBeenCalledWith({ params, headers: jasmine.any(Object) });
+        done();
+      })
+      done()
+    });
+
+    it('should hit the Pexels API with provided page', (done) => {
+      service.getGalleryResults('test', 3).subscribe(() => {
+        expect(searchSpy).toHaveBeenCalledWith({ params: { ...params, page: '4' }, headers: jasmine.any(Object) });
         done();
       })
       done()

@@ -2,8 +2,6 @@ import { Shallow } from "shallow-render";
 import { HeaderComponent } from './header.component';
 import { AppModule } from "src/app/app.module";
 
-
-
 describe('HeaderComponent', () => {
   let shallow: Shallow<HeaderComponent>;
 

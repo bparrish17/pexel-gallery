@@ -1,5 +1,4 @@
 import { SafeUrl } from "@angular/platform-browser";
-import { Observable } from "rxjs";
 
 export interface PexelsSearchResponse {
 	page: number;
