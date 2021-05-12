@@ -32,9 +32,11 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 - **Accessibility improvements**
 - performance handling of infinite scroll
   - hide images by section
+  - `throttleTime` => `throttle(<duration selector checking for searchResults$ emission>)`
 - proper components for the spinner, input field etc. (if it were necessary)
 - modules aliases for `@services`, `@components`
 - `retryWhen` operator for failed search queries
 - Consistently used SCSS Variables/theming
 - Animation to display for fab buttons on dialog
+- "Hover" state for images in addition to cursor that the UX is more clear in photos being clickable
 - More extensive directive tests
