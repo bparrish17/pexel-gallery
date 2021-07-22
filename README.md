@@ -1,6 +1,13 @@
-# PexelGallery
+# Demo Angular Application
 
 [Try the App Here](https://bparrish17.github.io/pexel-gallery/)
+
+This is a demo application featuring some common patterns, such as 
+- user action handling
+- front-end unit testing
+- asynchronous observable logic
+- component/app structure
+- simple styling
 
 ## Getting Started
 
@@ -29,6 +36,7 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 ## Wishlist
 
+- **Mobile Responsiveness**
 - **Accessibility improvements**
 - performance handling of infinite scroll
   - hide images by section
