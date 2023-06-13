@@ -9,6 +9,8 @@ This is a demo application featuring some common patterns, such as
 - component/app structure
 - simple styling
 
+Most of the logic can be found starting at the [App Component](https://github.com/bparrish17/pexel-gallery/blob/main/src/app/app.component.ts)
+
 ## Getting Started
 
 1. Clone this directory
